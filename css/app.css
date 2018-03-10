@@ -25,3 +25,42 @@ body {
 h1 {
   color: #008080;
 }
+
+/* Score panel: stars, moves & restart */
+
+.score-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+  width: 50%;
+}
+
+.move-score {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: top;
+  width: 145px;
+}
+
+.stars {
+  list-style-type: none;
+  margin: 0 5px;
+  padding: 0;
+  color: #ff9933;
+}
+
+.stars li {
+  display: inline-block;
+}
+
+.score-panel p {
+  margin: 0 5px;
+  padding: 0;
+}
+
+.restart {
+  margin: 0 10px;
+  padding: 0;
+}
