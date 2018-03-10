@@ -64,6 +64,7 @@ h1 {
 .restart {
   margin: 0 10px;
   padding: 0;
+  cursor: pointer;
 }
 
 /* Deck of cards */
