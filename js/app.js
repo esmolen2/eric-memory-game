@@ -55,3 +55,12 @@ restart.addEventListener('click', function () {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+// Show card symbol
+function showSymbol(event) {
+  if (event.target.classList.contains('card') === true) {
+      event.target.classList.add('show');
+  };
+}
+
+deck.addEventListener('click', showSymbol);
