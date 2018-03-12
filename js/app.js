@@ -64,3 +64,15 @@ function showSymbol(event) {
 }
 
 deck.addEventListener('click', showSymbol);
+
+//Add card to list of open cards
+const openCardsList = [];
+
+function openCards (event) {
+  if (event.target.classList.contains('card') === true) {
+        openCardsList.push(event.target);
+        return openCardsList;
+  };
+}
+
+deck.addEventListener('click', openCards);
