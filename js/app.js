@@ -66,12 +66,30 @@ function showSymbol(event) {
 deck.addEventListener('click', showSymbol);
 
 //Add card to list of open cards
-const openCardsList = [];
+let openCardsList = [];
+let matchedCardsList = [];
 
-function openCards (event) {
+function openCards(event) {
   if (event.target.classList.contains('card') === true) {
+    const firstCard = openCardsList[0];
+    if (openCardsList.length) {
+        if (firstCard.innerHTML === event.target.innerHTML) {
+            event.target.classList.add('match');
+            firstCard.classList.add('match');
+            matchedCardsList.push(event.target);
+            matchedCardsList.push(firstCard);
+            openCardsList = [];
+        } else {
+            setTimeout(function () {
+                event.target.classList.remove('show');
+                firstCard.classList.remove('show');
+            }, 500);
+            openCardsList = [];
+        }
+    } else {
         openCardsList.push(event.target);
         return openCardsList;
+    }
   };
 }
 

@@ -110,3 +110,7 @@ h1 {
 .show img {
   visibility: visible;
 }
+
+.match {
+  background: #00cc99;
+}
