@@ -1,11 +1,15 @@
-//Select deck and create array of cards
+// Set variables for identifying deck and cards as elements & lists
 
 const deck = document.querySelector('.deck');
 const cards = Array.prototype.slice.call(document.getElementsByClassName('card'));
+let openCardsList = [];
+let matchedCardsList = [];
 
-// Shuffle & place the cards on the page
+// Set variables for identifying score panel elements
 
-// 1. Shuffle function from http://stackoverflow.com/a/2450976
+const restart = document.querySelector('.restart');
+
+// Shuffle cards - from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -20,7 +24,7 @@ function shuffle(array) {
     return array;
 }
 
-// 2. Place the cards to arrange the entire deck on the page
+// Place the cards to arrange the entire deck on the page
 function placeCard(card) {
     deck.appendChild(card);
 }
@@ -28,22 +32,6 @@ function placeCard(card) {
 function arrangeDeck(array) {
     array.forEach(placeCard);
 }
-
-// 3a. Shuffling and arranging the deck on page load
-
-window.addEventListener('load', function () {
-    shuffle(cards);
-    arrangeDeck(cards);
-});
-
-// 3b. Shuffling and arranging the deck on clicking restart
-
-const restart = document.querySelector('.restart');
-
-restart.addEventListener('click', function () {
-    shuffle(cards);
-    arrangeDeck(cards);
-});
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -63,34 +51,70 @@ function showSymbol(event) {
   };
 }
 
-deck.addEventListener('click', showSymbol);
+// Add and clear lists of cards
 
-//Add card to list of open cards
-let openCardsList = [];
-let matchedCardsList = [];
+function addToList(item, array) {
+    array.push(item);
+    return array;
+}
+
+function clearList(array) {
+    array.length = 0;
+}
+
+// Add and remove CSS classes to elements
+
+function addClass(element, className) {
+    element.classList.add(className);
+}
+
+function removeClass(element, className) {
+    element.classList.remove(className);
+}
+
+// Logic for opening cards
 
 function openCards(event) {
   if (event.target.classList.contains('card') === true) {
     const firstCard = openCardsList[0];
     if (openCardsList.length) {
         if (firstCard.innerHTML === event.target.innerHTML) {
-            event.target.classList.add('match');
-            firstCard.classList.add('match');
-            matchedCardsList.push(event.target);
-            matchedCardsList.push(firstCard);
-            openCardsList = [];
+            addClass(event.target, 'match');
+            addClass(firstCard, 'match');
+            addToList(event.target, matchedCardsList);
+            addToList(firstCard, matchedCardsList);
+            clearList(openCardsList);
         } else {
             setTimeout(function () {
-                event.target.classList.remove('show');
-                firstCard.classList.remove('show');
+                removeClass(event.target, 'show');
+                removeClass(firstCard, 'show');
             }, 500);
-            openCardsList = [];
+            clearList(openCardsList);
         }
     } else {
-        openCardsList.push(event.target);
-        return openCardsList;
+        addToList(event.target, openCardsList);
     }
   };
 }
 
-deck.addEventListener('click', openCards);
+// Event listeners
+
+// Page load - shuffle deck and arrange cards
+
+window.addEventListener('load', function () {
+    shuffle(cards);
+    arrangeDeck(cards);
+});
+
+// Click restart
+
+restart.addEventListener('click', function () {
+    shuffle(cards);
+    arrangeDeck(cards);
+});
+
+// Clicking cards
+deck.addEventListener('click', function () {
+    showSymbol(event);
+    openCards(event);
+});
