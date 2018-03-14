@@ -44,13 +44,6 @@ function arrangeDeck(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-// Show card symbol
-function showSymbol(event) {
-  if (event.target.classList.contains('card') === true) {
-      event.target.classList.add('show');
-  };
-}
-
 // Add and clear lists of cards
 
 function addToList(item, array) {
@@ -72,7 +65,28 @@ function removeClass(element, className) {
     element.classList.remove(className);
 }
 
-// Logic for opening cards
+// Control display of card symbol
+function showSymbol(event) {
+    if (event.target.classList.contains('card') === true) {
+        addClass(event.target, 'show');
+    };
+}
+
+// Control display of the winning screen
+
+const winningScreen = document.getElementById('winning-screen');
+
+function showWinner() {
+    if (cards.length === matchedCardsList.length) {
+      addClass(winningScreen, 'flex');
+    };
+};
+
+function hideWinner() {
+    removeClass(winningScreen, 'flex');
+};
+
+// Logic for opening cards: compare for matches & decide winner
 
 function openCards(event) {
   if (event.target.classList.contains('card') === true) {
@@ -84,6 +98,7 @@ function openCards(event) {
             addToList(event.target, matchedCardsList);
             addToList(firstCard, matchedCardsList);
             clearList(openCardsList);
+            showWinner();
         } else {
             setTimeout(function () {
                 removeClass(event.target, 'show');
