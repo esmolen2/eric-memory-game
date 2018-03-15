@@ -142,7 +142,7 @@ h1 {
   padding: 0;
 }
 
-button {
+.play-again {
   background-color: #008080;
   color: #fff;
   font-size: 1em;
@@ -155,11 +155,11 @@ button {
   cursor: pointer;
 }
 
-button:active {
+.play-again:active {
   background-color: #fff;
   color: #008080;
 }
 
-button:focus {
+.play-again:focus {
   outline: 0;
 }

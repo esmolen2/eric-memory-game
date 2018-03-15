@@ -72,9 +72,23 @@ function showSymbol(event) {
     };
 }
 
+function hideSymbol(element) {
+    element.classList.remove('show');
+}
+
+function hideMatch(element) {
+    element.classList.remove('match');
+}
+
+function hideAllSymbols(array) {
+    array.forEach(hideSymbol);
+    array.forEach(hideMatch);
+}
+
 // Control display of the winning screen
 
 const winningScreen = document.getElementById('winning-screen');
+const playAgain = document.querySelector('.play-again');
 
 function showWinner() {
     if (cards.length === matchedCardsList.length) {
@@ -124,6 +138,9 @@ window.addEventListener('load', function () {
 // Click restart
 
 restart.addEventListener('click', function () {
+    hideAllSymbols(cards);
+    clearList(openCardsList);
+    clearList(matchedCardsList);
     shuffle(cards);
     arrangeDeck(cards);
 });
@@ -132,4 +149,15 @@ restart.addEventListener('click', function () {
 deck.addEventListener('click', function () {
     showSymbol(event);
     openCards(event);
+});
+
+// Winning screen
+
+playAgain.addEventListener('click', function () {
+  hideWinner()
+  hideAllSymbols(cards);
+  clearList(openCardsList);
+  clearList(matchedCardsList);
+  shuffle(cards);
+  arrangeDeck(cards);
 });
