@@ -5,7 +5,7 @@ const cards = Array.prototype.slice.call(document.getElementsByClassName('card')
 let openCardsList = [];
 let matchedCardsList = [];
 
-// Set variables for identifying score panel elements
+// Set variable for identifying restart element
 
 const restart = document.querySelector('.restart');
 
@@ -32,17 +32,6 @@ function placeCard(card) {
 function arrangeDeck(array) {
     array.forEach(placeCard);
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
 // Add and clear lists of cards
 
@@ -169,44 +158,44 @@ const playAgain = document.querySelector('.play-again');
 
 function showWinner() {
     if (cards.length === matchedCardsList.length) {
-      stopCount();
-      winningSeconds.innerHTML = seconds;
-      winningMoves.innerHTML = moves;
-      winningStars.innerHTML = stars;
-      addClass(winningScreen, 'flex');
+        stopCount();
+        winningSeconds.innerHTML = seconds;
+        winningMoves.innerHTML = moves;
+        winningStars.innerHTML = stars;
+        addClass(winningScreen, 'flex');
     };
-};
+}
 
 function hideWinner() {
     removeClass(winningScreen, 'flex');
-};
+}
 
 // Logic for opening cards: compare for matches & decide winner
 
 function openCards(event) {
-  if (event.target.classList.contains('card') === true) {
-    moveCounter();
-    starCount();
-    const firstCard = openCardsList[0];
-    if (openCardsList.length) {
-        if (firstCard.innerHTML === event.target.innerHTML) {
-            addClass(event.target, 'match');
-            addClass(firstCard, 'match');
-            addToList(event.target, matchedCardsList);
-            addToList(firstCard, matchedCardsList);
-            clearList(openCardsList);
-            showWinner();
+    if (event.target.classList.contains('card') === true) {
+        moveCounter();
+        starCount();
+        const firstCard = openCardsList[0];
+        if (openCardsList.length) {
+            if (firstCard.innerHTML === event.target.innerHTML) {
+                addClass(event.target, 'match');
+                addClass(firstCard, 'match');
+                addToList(event.target, matchedCardsList);
+                addToList(firstCard, matchedCardsList);
+                clearList(openCardsList);
+                showWinner();
+            } else {
+                setTimeout(function () {
+                    removeClass(event.target, 'show');
+                    removeClass(firstCard, 'show');
+                }, 500);
+                clearList(openCardsList);
+            }
         } else {
-            setTimeout(function () {
-                removeClass(event.target, 'show');
-                removeClass(firstCard, 'show');
-            }, 500);
-            clearList(openCardsList);
+            addToList(event.target, openCardsList);
         }
-    } else {
-        addToList(event.target, openCardsList);
-    }
-  };
+    };
 }
 
 // Event listeners
@@ -242,16 +231,16 @@ deck.addEventListener('click', function () {
 
 deck.addEventListener('click', startCount);
 
-// Winning screen
+// Restart from winning screen
 
 playAgain.addEventListener('click', function () {
-  hideWinner();
-  hideAllSymbols(cards);
-  clearList(openCardsList);
-  clearList(matchedCardsList);
-  resetTimer();
-  clearMoves();
-  resetStars();
-  shuffle(cards);
-  arrangeDeck(cards);
+    hideWinner();
+    hideAllSymbols(cards);
+    clearList(openCardsList);
+    clearList(matchedCardsList);
+    resetTimer();
+    clearMoves();
+    resetStars();
+    shuffle(cards);
+    arrangeDeck(cards);
 });
