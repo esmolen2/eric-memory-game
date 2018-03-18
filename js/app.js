@@ -134,11 +134,37 @@ function clearMoves() {
     movesDisplay.innerHTML = moves;
 }
 
+// Control stars
+let stars = '3 stars';
+const starsDisplay = document.querySelector('.stars');
+
+function starCount() {
+    if (moves <= 13) {
+        starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li>';
+        stars = '3 stars';
+    } else if (moves > 13 && moves <= 18) {
+        starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li>';
+        stars = '2 stars';
+    } else if (moves > 18 && moves <= 23) {
+        starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li>';
+        stars = '1 star';
+    } else {
+        starsDisplay.innerHTML = '';
+        stars = '0 stars'
+    }
+}
+
+function resetStars() {
+    stars = '3 stars';
+    starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li>';
+}
+
 // Control display of the winning screen
 
 const winningScreen = document.getElementById('winning-screen');
 const winningSeconds = winningScreen.querySelector('.seconds');
 const winningMoves = winningScreen.querySelector('.moves');
+const winningStars = winningScreen.querySelector('.stars');
 const playAgain = document.querySelector('.play-again');
 
 function showWinner() {
@@ -146,6 +172,7 @@ function showWinner() {
       stopCount();
       winningSeconds.innerHTML = seconds;
       winningMoves.innerHTML = moves;
+      winningStars.innerHTML = stars;
       addClass(winningScreen, 'flex');
     };
 };
@@ -159,6 +186,7 @@ function hideWinner() {
 function openCards(event) {
   if (event.target.classList.contains('card') === true) {
     moveCounter();
+    starCount();
     const firstCard = openCardsList[0];
     if (openCardsList.length) {
         if (firstCard.innerHTML === event.target.innerHTML) {
@@ -198,6 +226,7 @@ restart.addEventListener('click', function () {
     clearList(matchedCardsList);
     resetTimer();
     clearMoves();
+    resetStars();
     shuffle(cards);
     arrangeDeck(cards);
 });
@@ -222,6 +251,7 @@ playAgain.addEventListener('click', function () {
   clearList(matchedCardsList);
   resetTimer();
   clearMoves();
+  resetStars();
   shuffle(cards);
   arrangeDeck(cards);
 });
