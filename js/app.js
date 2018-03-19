@@ -132,12 +132,9 @@ function starCount() {
     } else if (moves > 13 && moves <= 18) {
         starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li><li><span class="fa fa-star"></span></li>';
         stars = '2 stars';
-    } else if (moves > 18 && moves <= 23) {
+    } else {
         starsDisplay.innerHTML = '<li><span class="fa fa-star"></span></li>';
         stars = '1 star';
-    } else {
-        starsDisplay.innerHTML = '';
-        stars = '0 stars'
     }
 }
 
