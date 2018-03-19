@@ -56,9 +56,7 @@ function removeClass(element, className) {
 
 // Control display of card symbol
 function showSymbol(event) {
-    if (event.target.classList.contains('card') === true) {
-        addClass(event.target, 'show');
-    };
+    addClass(event.target, 'show');
 }
 
 function hideSymbol(element) {
@@ -173,28 +171,26 @@ function hideWinner() {
 // Logic for opening cards: compare for matches & decide winner
 
 function openCards(event) {
-    if (event.target.classList.contains('card') === true) {
-        moveCounter();
-        starCount();
-        const firstCard = openCardsList[0];
-        if (openCardsList.length) {
-            if (firstCard.innerHTML === event.target.innerHTML) {
-                addClass(event.target, 'match');
-                addClass(firstCard, 'match');
-                addToList(event.target, matchedCardsList);
-                addToList(firstCard, matchedCardsList);
-                clearList(openCardsList);
-                showWinner();
-            } else {
-                setTimeout(function () {
-                    removeClass(event.target, 'show');
-                    removeClass(firstCard, 'show');
-                }, 500);
-                clearList(openCardsList);
-            }
+    moveCounter();
+    starCount();
+    const firstCard = openCardsList[0];
+    if (openCardsList.length) {
+        if (firstCard.innerHTML === event.target.innerHTML) {
+            addClass(event.target, 'match');
+            addClass(firstCard, 'match');
+            addToList(event.target, matchedCardsList);
+            addToList(firstCard, matchedCardsList);
+            clearList(openCardsList);
+            showWinner();
         } else {
-            addToList(event.target, openCardsList);
-        }
+            setTimeout(function () {
+                removeClass(event.target, 'show');
+                removeClass(firstCard, 'show');
+            }, 500);
+            clearList(openCardsList);
+        };
+    } else {
+        addToList(event.target, openCardsList);
     };
 }
 
@@ -223,8 +219,10 @@ restart.addEventListener('click', function () {
 // Clicking cards
 
 deck.addEventListener('click', function () {
-    showSymbol(event);
-    openCards(event);
+    if (event.target.classList.contains('card') && !event.target.classList.contains('show') && !event.target.classList.contains('match')) {
+        showSymbol(event);
+        openCards(event);
+    }
 });
 
 // Start & display timer
