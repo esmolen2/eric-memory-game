@@ -11,7 +11,7 @@ OR
 1. [Download](https://github.com/esmolen2/eric-memory-game/archive/master.zip) or [Clone](https://github.com/esmolen2/eric-memory-game.git) the Repository.
 2. Open `index.html` file to view the game in your browser.
 
-## How to Play:
+### How to Play:
 
 * The player flips one card over to reveal its underlying school badge.
 * The player then turns over a second card, trying to find the other card in the deck with a matching badge.
